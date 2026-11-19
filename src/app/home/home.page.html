@@ -1,0 +1,139 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      <span class="brand">
+        <span class="brand-logo">
+          <ion-icon name="cube-outline" aria-hidden="true"></ion-icon>
+        </span>
+        <span class="brand-text">
+          LogiTrack Express
+          <span class="brand-sub">Control de cinta</span>
+        </span>
+      </span>
+    </ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar class="filters">
+    <div class="filters-row">
+      <ion-searchbar
+        class="search"
+        [(ngModel)]="searchTerm"
+        placeholder="Buscar LTK-XXXX-ES"
+        aria-label="Buscar paquete por código de seguimiento"
+        inputmode="search"
+        [animated]="true"
+      ></ion-searchbar>
+
+      <ion-select
+        class="priority"
+        [(ngModel)]="priorityFilter"
+        label="Prioridad"
+        label-placement="stacked"
+        interface="popover"
+      >
+        <ion-select-option value="ALL">Todas</ion-select-option>
+        <ion-select-option value="CRITICAL">Crítica</ion-select-option>
+        <ion-select-option value="STANDARD">Estándar</ion-select-option>
+        <ion-select-option value="LOW">Baja</ion-select-option>
+      </ion-select>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<!-- fullscreen: el contenido pasa por debajo de la cabecera glass -->
+<ion-content [fullscreen]="true">
+  <main class="page">
+    <h1 class="sr-only">Inspección de paquetes en cinta</h1>
+
+    <!-- Resumen reactivo: computed() del servicio + porcentajes de presentación.
+         Los @for de un solo elemento con track por valor recrean el número
+         cuando cambia → se relanza la animación CSS del contador. -->
+    <section class="stats" aria-label="Resumen del turno">
+      <div class="stat">
+        <div class="stat-top">
+          <span class="stat-icon"><ion-icon name="cube-outline" aria-hidden="true"></ion-icon></span>
+          <span class="lbl">Total</span>
+        </div>
+        <span class="num-wrap">
+          @for (v of [stats().total]; track v) {<span class="num">{{ v }}</span>}
+        </span>
+        <div class="bar" aria-hidden="true"><span [style.width.%]="100"></span></div>
+        <span class="pct">Paquetes del turno</span>
+      </div>
+
+      <div class="stat transit">
+        <div class="stat-top">
+          <span class="stat-icon"><ion-icon name="navigate-outline" aria-hidden="true"></ion-icon></span>
+          <span class="lbl">En tránsito</span>
+        </div>
+        <span class="num-wrap">
+          @for (v of [stats().inTransit]; track v) {<span class="num">{{ v }}</span>}
+        </span>
+        <div class="bar" aria-hidden="true"><span [style.width.%]="statPercents().inTransit"></span></div>
+        <span class="pct">{{ statPercents().inTransit }} % del total</span>
+      </div>
+
+      <div class="stat ok">
+        <div class="stat-top">
+          <span class="stat-icon"><ion-icon name="checkmark-done-outline" aria-hidden="true"></ion-icon></span>
+          <span class="lbl">Inspeccionados</span>
+        </div>
+        <span class="num-wrap">
+          @for (v of [stats().inspected]; track v) {<span class="num">{{ v }}</span>}
+        </span>
+        <div class="bar" aria-hidden="true"><span [style.width.%]="statPercents().inspected"></span></div>
+        <span class="pct">{{ statPercents().inspected }} % del total</span>
+      </div>
+
+      <div class="stat ko">
+        <div class="stat-top">
+          <span class="stat-icon"><ion-icon name="ban-outline" aria-hidden="true"></ion-icon></span>
+          <span class="lbl">Rechazados</span>
+        </div>
+        <span class="num-wrap">
+          @for (v of [stats().rejected]; track v) {<span class="num">{{ v }}</span>}
+        </span>
+        <div class="bar" aria-hidden="true"><span [style.width.%]="statPercents().rejected"></span></div>
+        <span class="pct">{{ statPercents().rejected }} % del total</span>
+      </div>
+    </section>
+
+    <p class="result-count" aria-live="polite">
+      Mostrando {{ filteredPackages().length }} de {{ stats().total }} paquetes
+    </p>
+
+    <ion-list lines="none" class="package-list">
+      @for (pkg of filteredPackages(); track pkg.id; let i = $index) {
+        <ion-item-sliding #sliding [style.--i]="i">
+          <ion-item class="package-item">
+            <app-package-card [package]="pkg" (statusChange)="onStatusChange($event)"></app-package-card>
+          </ion-item>
+
+          <ion-item-options side="end">
+            @if (pkg.status !== 'IN_TRANSIT') {
+              <ion-item-option class="reset-option" (click)="resetStatus(pkg, sliding)">
+                <ion-icon slot="top" name="refresh-outline" aria-hidden="true"></ion-icon>
+                Deshacer
+              </ion-item-option>
+            } @else {
+              <ion-item-option class="info-option" [disabled]="true">Pendiente</ion-item-option>
+            }
+          </ion-item-options>
+        </ion-item-sliding>
+      } @empty {
+        <div class="empty" role="status">
+          <div class="empty-art" aria-hidden="true">
+            <ion-icon class="art-main" name="file-tray-outline"></ion-icon>
+            <ion-icon class="art-badge" name="search-outline"></ion-icon>
+          </div>
+          <h2>No hay paquetes que coincidan</h2>
+          <p>Revisa el código de seguimiento o cambia el filtro de prioridad.</p>
+          <button type="button" class="link-btn" (click)="clearFilters()">
+            <ion-icon name="refresh-outline" aria-hidden="true"></ion-icon>
+            Limpiar filtros
+          </button>
+        </div>
+      }
+    </ion-list>
+  </main>
+</ion-content>

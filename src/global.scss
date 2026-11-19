@@ -1,0 +1,27 @@
+/* Estilos visuales compartidos (fuera del presupuesto de 4 kb por componente).
+   @use debe ir antes que cualquier otra regla en Sass. */
+@use './theme/motion';
+@use './theme/home';
+@use './theme/package-card';
+
+/* Ionic: CSS imprescindible */
+@import '@ionic/angular/css/core.css';
+@import '@ionic/angular/css/normalize.css';
+@import '@ionic/angular/css/structure.css';
+@import '@ionic/angular/css/typography.css';
+@import '@ionic/angular/css/display.css';
+
+/* Utilidades opcionales */
+@import '@ionic/angular/css/padding.css';
+@import '@ionic/angular/css/flex-utils.css';
+@import '@ionic/angular/css/text-alignment.css';
+
+/* Tema oscuro SIEMPRE activo: almacén con baja luminosidad */
+@import '@ionic/angular/css/palettes/dark.always.css';
+
+/* Foco de teclado muy visible (WCAG 2.4.7 Foco visible) */
+:focus-visible,
+.ion-focused {
+  outline: 3px solid var(--lt-focus) !important;
+  outline-offset: 2px;
+}

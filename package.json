@@ -1,0 +1,32 @@
+{
+  "name": "logitrack-express",
+  "version": "1.0.0",
+  "description": "LogiTrack Express - Interfaz de inspección de paquetes (DI 0488 - Actividad 2). Ionic 8 + Angular 20 standalone + Signals.",
+  "private": true,
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development"
+  },
+  "dependencies": {
+    "@angular/common": "^20.3.0",
+    "@angular/compiler": "^20.3.0",
+    "@angular/core": "^20.3.0",
+    "@angular/forms": "^20.3.0",
+    "@angular/platform-browser": "^20.3.0",
+    "@angular/router": "^20.3.0",
+    "@ionic/angular": "^8.8.0",
+    "ionicons": "^8.0.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.6.0",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^20.3.0",
+    "@angular/cli": "^20.3.0",
+    "@angular/compiler-cli": "^20.3.0",
+    "@ionic/angular-toolkit": "^12.0.0",
+    "typescript": "~5.8.0"
+  }
+}

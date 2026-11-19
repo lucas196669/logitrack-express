@@ -1,0 +1,168 @@
+/*
+ * Estilos visuales de app-package-card.
+ * Fuera del .scss del componente para respetar el presupuesto de 4 kb.
+ * Acotados bajo el selector del componente para no filtrarse a otras vistas.
+ */
+
+app-package-card {
+  .card {
+    --accent: var(--lt-transit-bg);
+    --accent-rgb: var(--lt-transit-rgb);
+    --glow: lt-glow-transit;
+    --pop: lt-pop-transit;
+
+    position: relative;
+    height: 100%;
+    padding: 16px 16px 16px 20px;
+    border-radius: var(--lt-radius);
+    background: linear-gradient(160deg, #1a2642 0%, var(--lt-surface) 55%);
+    border: 1px solid rgba(148, 163, 184, 0.14);
+    border-left: 5px solid var(--accent);
+    box-shadow: var(--lt-shadow), -4px 0 18px -8px rgba(var(--accent-rgb), 0.45);
+    transition: border-color 0.35s ease, box-shadow 0.35s ease;
+
+    /* Entrada escalonada (--i lo pone la página con el índice del @for)
+       + destello del borde, que se relanza al cambiar de estado */
+    animation:
+      lt-enter 0.5s var(--lt-ease) both,
+      var(--glow) 0.7s ease-out;
+    animation-delay: calc(min(var(--i, 0), 8) * 60ms), 0s;
+
+    &.status-inspected {
+      --accent: var(--lt-inspected-bg);
+      --accent-rgb: var(--lt-inspected-rgb);
+      --glow: lt-glow-inspected;
+      --pop: lt-pop-inspected;
+    }
+
+    &.status-rejected {
+      --accent: var(--lt-rejected-bg);
+      --accent-rgb: var(--lt-rejected-rgb);
+      --glow: lt-glow-rejected;
+      --pop: lt-pop-rejected;
+    }
+  }
+
+  .card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .tracking {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #f8fafc;
+    font-family: ui-monospace, 'JetBrains Mono', 'Roboto Mono', Consolas, monospace;
+    letter-spacing: 0.04em;
+  }
+
+  .badge,
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    border-radius: 999px;
+    padding: 4px 10px 4px 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    white-space: nowrap;
+
+    ion-icon { font-size: 14px; }
+  }
+
+  .priority-critical { background: var(--lt-critical-bg); color: var(--lt-critical-fg); }
+  .priority-standard { background: var(--lt-standard-bg); color: var(--lt-standard-fg); }
+  .priority-low      { background: var(--lt-low-bg);      color: var(--lt-low-fg); }
+
+  /* Fila de datos como chips */
+  .meta {
+    list-style: none;
+    padding: 0;
+    margin: 14px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+
+    li {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 8px;
+      background: var(--lt-chip);
+      color: #e2e8f0;
+      font-size: 0.85rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    ion-icon { color: #cbd5e1; font-size: 15px; flex-shrink: 0; }
+  }
+
+  .card-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .status-pill {
+    background: var(--accent);
+    color: var(--lt-transit-fg);
+    animation: var(--pop) 0.4s var(--lt-ease);
+    transition: background-color 0.3s ease;
+
+    &::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+  }
+
+  .status-inspected .status-pill { color: var(--lt-inspected-fg); }
+  .status-rejected .status-pill  { color: var(--lt-rejected-fg); }
+
+  .actions {
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
+  }
+
+  /* Botones: objetivo táctil ≥ 44 px (uso con guantes) + efecto pulsado */
+  ion-button {
+    min-height: 44px;
+    margin: 0;
+    font-weight: 700;
+    text-transform: none;
+    letter-spacing: 0;
+    --border-radius: 12px;
+    --padding-start: 14px;
+    --padding-end: 16px;
+    --box-shadow: 0 6px 16px -8px rgba(var(--btn-rgb), 0.8);
+    transition: transform 0.15s ease, filter 0.2s ease;
+
+    &:hover { filter: brightness(1.06); }
+    &:active { transform: scale(0.97); }
+  }
+
+  .btn-ok { --btn-rgb: var(--lt-inspected-rgb); --background: var(--lt-inspected-bg); --color: var(--lt-inspected-fg); }
+  .btn-ko { --btn-rgb: var(--lt-rejected-rgb);  --background: var(--lt-rejected-bg);  --color: var(--lt-rejected-fg); }
+
+  /* Deshabilitado claro: sin relleno, borde discontinuo y texto legible
+     (#cbd5e1 sobre #1f2c4a → 9.3:1). Pisamos la opacidad 0.5 de Ionic. */
+  ion-button.button-disabled {
+    opacity: 1;
+    --background: var(--lt-chip);
+    --color: var(--lt-muted-text);
+    --box-shadow: none;
+    --border-width: 1px;
+    --border-style: dashed;
+    --border-color: var(--lt-field-border);
+    cursor: not-allowed;
+  }
+}

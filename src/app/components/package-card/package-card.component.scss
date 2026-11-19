@@ -1,0 +1,9 @@
+/*
+ * Los estilos visuales de la tarjeta están en src/theme/package-card.scss
+ * (cargado desde global.scss) para no superar el presupuesto de 4 kb
+ * por componente definido en angular.json.
+ */
+:host {
+  display: block;
+  width: 100%;
+}

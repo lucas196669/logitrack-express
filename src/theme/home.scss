@@ -1,0 +1,340 @@
+/*
+ * Estilos de la página Home (app-home).
+ * Viven aquí, y no en home.page.scss, para respetar el presupuesto
+ * de 4 kb por componente de angular.json. Todo va acotado bajo `app-home`.
+ */
+
+app-home {
+  /* ---------- Fondo: degradado azul noche (no gris plano) ---------- */
+  ion-content {
+    --background: linear-gradient(180deg, var(--lt-bg-top) 0%, var(--lt-bg-bottom) 100%);
+  }
+
+  /* ---------- Cabecera glass ---------- */
+  ion-header {
+    background: rgba(17, 26, 46, 0.78);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+    box-shadow: 0 8px 24px -16px rgba(0, 0, 0, 0.8);
+  }
+
+  ion-header ion-toolbar {
+    --background: transparent;
+    --border-width: 0;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--ion-color-primary);
+  }
+
+  .brand-logo {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: radial-gradient(circle at 30% 25%, rgba(255, 201, 77, 0.28), rgba(255, 201, 77, 0.06) 70%);
+    border: 1px solid rgba(255, 201, 77, 0.45);
+    box-shadow: 0 0 18px -4px rgba(255, 201, 77, 0.55);
+
+    ion-icon {
+      font-size: 20px;
+      filter: drop-shadow(0 0 6px rgba(255, 201, 77, 0.7));
+    }
+  }
+
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+
+  .brand-sub {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--lt-muted-text);
+  }
+
+  /* ---------- Filtros: buscador + select con el mismo alto ---------- */
+  .filters-row {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2px 12px 10px;
+  }
+
+  .search {
+    flex: 1;
+    padding: 0;
+    height: 48px;
+    --background: var(--lt-surface-2);
+    --color: #f1f5f9;
+    --placeholder-color: #cbd5e1;
+    --placeholder-opacity: 1;
+    --icon-color: #cbd5e1;
+    --clear-button-color: #cbd5e1;
+    --border-radius: 12px;
+    --box-shadow: none;
+
+    .searchbar-input-container { height: 48px; }
+
+    .searchbar-input {
+      height: 48px;
+      border: 1px solid var(--lt-field-border);
+      font-size: 0.95rem;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    &.searchbar-has-focus .searchbar-input {
+      border-color: var(--ion-color-primary);
+      box-shadow: 0 0 0 3px rgba(255, 201, 77, 0.25);
+    }
+  }
+
+  .priority {
+    flex: 0 0 148px;
+    height: 48px;
+    min-height: 48px;
+    padding: 0 12px;
+    border-radius: 12px;
+    border: 1px solid var(--lt-field-border);
+    background: var(--lt-surface-2);
+    --highlight-color-focused: var(--ion-color-primary);
+    font-size: 0.95rem;
+
+    &::part(label) { color: var(--lt-muted-text); }
+    &::part(icon) { color: #cbd5e1; opacity: 1; }
+  }
+
+  /* ---------- Layout ---------- */
+  .page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 16px 12px 32px;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* ---------- Tarjetas de estadísticas ---------- */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .stat {
+    --accent: #ffc94d;
+    --accent-rgb: 255, 201, 77;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 14px;
+    border-radius: var(--lt-radius);
+    background:
+      linear-gradient(135deg, rgba(var(--accent-rgb), 0.18) 0%, rgba(var(--accent-rgb), 0.04) 60%),
+      var(--lt-surface);
+    border: 1px solid rgba(var(--accent-rgb), 0.28);
+    box-shadow: var(--lt-shadow);
+    animation: lt-enter 0.5s var(--lt-ease) both;
+
+    &.transit { --accent: var(--lt-transit-bg); --accent-rgb: var(--lt-transit-rgb); animation-delay: 60ms; }
+    &.ok      { --accent: var(--lt-inspected-bg); --accent-rgb: var(--lt-inspected-rgb); animation-delay: 120ms; }
+    &.ko      { --accent: var(--lt-rejected-bg); --accent-rgb: var(--lt-rejected-rgb); animation-delay: 180ms; }
+  }
+
+  .stat-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .stat-icon {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    background: rgba(var(--accent-rgb), 0.16);
+    color: var(--accent);
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .stat .lbl {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--lt-muted-text);
+    line-height: 1.2;
+  }
+
+  .stat .num-wrap {
+    display: block;
+    overflow: hidden;
+    height: 2.4rem;
+  }
+
+  .stat .num {
+    display: block;
+    font-size: 2rem;
+    line-height: 2.4rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    color: var(--accent);
+    animation: lt-count 0.4s var(--lt-ease) both;
+  }
+
+  .bar {
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+
+    span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, rgba(var(--accent-rgb), 0.7), var(--accent));
+      box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.6);
+      transition: width 0.6s var(--lt-ease);
+    }
+  }
+
+  .pct {
+    font-size: 0.75rem;
+    color: var(--lt-muted-text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .result-count {
+    color: var(--lt-muted-text);
+    font-size: 0.9rem;
+    margin: 18px 4px 8px;
+  }
+
+  /* ---------- Lista de paquetes ---------- */
+  .package-list {
+    background: transparent;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  ion-item-sliding {
+    border-radius: var(--lt-radius);
+  }
+
+  .package-item {
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    --background: transparent;
+    --background-hover: transparent;
+    --background-activated: transparent;
+    --background-focused: transparent;
+    --min-height: 0;
+    overflow: visible;
+  }
+
+  .reset-option {
+    --background: var(--ion-color-primary);
+    --color: var(--ion-color-primary-contrast);
+    font-weight: 700;
+  }
+
+  .info-option {
+    --background: #334155;
+    --color: #f1f5f9;
+  }
+
+  /* ---------- Estado vacío ---------- */
+  .empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 48px 16px;
+    color: var(--lt-muted-text);
+    animation: lt-enter 0.4s var(--lt-ease) both;
+
+    h2 { color: #f1f5f9; font-size: 1.25rem; margin: 20px 0 6px; }
+    p  { margin: 0 auto 20px; max-width: 34ch; }
+  }
+
+  .empty-art {
+    position: relative;
+    width: 112px;
+    height: 112px;
+    margin: 0 auto;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: radial-gradient(circle, rgba(255, 201, 77, 0.16), var(--lt-surface-2) 70%);
+    border: 1px solid rgba(255, 201, 77, 0.35);
+    animation: lt-float 4s ease-in-out infinite;
+
+    .art-main { font-size: 52px; color: #cbd5e1; }
+
+    .art-badge {
+      position: absolute;
+      right: 4px;
+      bottom: 4px;
+      font-size: 22px;
+      padding: 8px;
+      border-radius: 50%;
+      background: var(--ion-color-primary);
+      color: var(--ion-color-primary-contrast);
+      box-shadow: 0 0 16px rgba(255, 201, 77, 0.5);
+    }
+  }
+
+  .link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--ion-color-primary);
+    color: var(--ion-color-primary-contrast);
+    border: 0;
+    border-radius: 12px;
+    min-height: 44px;
+    padding: 0 20px;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 20px -8px rgba(255, 201, 77, 0.6);
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+
+    &:hover { box-shadow: 0 10px 24px -6px rgba(255, 201, 77, 0.75); }
+    &:active { transform: scale(0.97); }
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (min-width: 768px) {
+    .stats { grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .package-list { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .page { padding: 20px 20px 40px; }
+    .filters-row { padding: 2px 20px 12px; }
+    .priority { flex-basis: 180px; }
+  }
+}

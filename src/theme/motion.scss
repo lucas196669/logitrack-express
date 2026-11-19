@@ -1,0 +1,47 @@
+/*
+ * Microanimaciones con CSS puro (sin @angular/animations).
+ * Truco para reanimar al cambiar de estado: cada estado usa un keyframe
+ * con NOMBRE distinto. Al cambiar el nombre, el navegador lanza la animación
+ * de nuevo; si el nombre no cambia (p. ej. lt-enter), no se repite.
+ */
+
+@keyframes lt-enter {
+  from { opacity: 0; transform: translateY(14px) scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes lt-count {
+  0%   { opacity: 0; transform: translateY(40%); }
+  100% { opacity: 1; transform: none; }
+}
+
+$lt-states: (transit: var(--lt-transit-rgb), inspected: var(--lt-inspected-rgb), rejected: var(--lt-rejected-rgb));
+
+@each $name, $rgb in $lt-states {
+  /* Destello del borde lateral */
+  @keyframes lt-glow-#{$name} {
+    0%   { box-shadow: var(--lt-shadow), -6px 0 28px -4px rgba(#{$rgb}, 0.75); }
+    100% { box-shadow: var(--lt-shadow), -4px 0 18px -8px rgba(#{$rgb}, 0.45); }
+  }
+  /* "Pop" del chip de estado */
+  @keyframes lt-pop-#{$name} {
+    0%   { transform: scale(0.8); }
+    60%  { transform: scale(1.08); }
+    100% { transform: scale(1); }
+  }
+}
+
+@keyframes lt-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+
+/* Accesibilidad (WCAG 2.3.3): sin movimiento si el usuario lo pide */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

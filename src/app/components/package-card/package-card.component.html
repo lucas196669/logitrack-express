@@ -1,0 +1,56 @@
+<article
+  class="card"
+  [class]="statusClass()"
+  [attr.aria-label]="'Paquete ' + package().trackingCode + ', ' + statusLabel()"
+>
+  <header class="card-head">
+    <h2 class="tracking">{{ package().trackingCode }}</h2>
+    <span class="badge" [class]="priorityClass()">
+      <ion-icon [name]="priorityIcon()" aria-hidden="true"></ion-icon>
+      {{ priorityLabel() }}
+    </span>
+  </header>
+
+  <ul class="meta">
+    <li>
+      <ion-icon name="location-outline" aria-hidden="true"></ion-icon>
+      {{ package().destinationHub }}
+    </li>
+    <li>
+      <ion-icon name="scale-outline" aria-hidden="true"></ion-icon>
+      {{ package().weightKg | number: '1.1-2' }} kg
+    </li>
+    <li>
+      <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
+      <time [attr.datetime]="package().timestamp.toISOString()">{{ package().timestamp | date: 'dd/MM HH:mm' }}</time>
+    </li>
+  </ul>
+
+  <div class="card-foot">
+    <span class="status-pill" role="status">{{ statusLabel() }}</span>
+
+    <div class="actions">
+      <ion-button
+        class="btn-ok"
+        fill="solid"
+        [disabled]="isInspected()"
+        [attr.aria-label]="'Inspeccionar paquete ' + package().trackingCode"
+        (click)="markAs('INSPECTED')"
+      >
+        <ion-icon slot="start" name="checkmark-circle-outline" aria-hidden="true"></ion-icon>
+        Inspeccionar
+      </ion-button>
+
+      <ion-button
+        class="btn-ko"
+        fill="solid"
+        [disabled]="isRejected()"
+        [attr.aria-label]="'Rechazar paquete ' + package().trackingCode"
+        (click)="markAs('REJECTED')"
+      >
+        <ion-icon slot="start" name="close-circle-outline" aria-hidden="true"></ion-icon>
+        Rechazar
+      </ion-button>
+    </div>
+  </div>
+</article>

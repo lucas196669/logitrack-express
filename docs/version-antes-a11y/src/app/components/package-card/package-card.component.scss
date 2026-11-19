@@ -1,0 +1,85 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.card {
+  background: var(--ion-card-background);
+  border-radius: 12px;
+  border-left: 8px solid var(--lt-transit-bg);
+  padding: 14px 16px;
+  margin: 6px 0;
+  transition: border-color 0.25s ease;
+
+  &.status-inspected { border-left-color: var(--lt-inspected-bg); }
+  &.status-rejected  { border-left-color: var(--lt-rejected-bg); }
+}
+
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.tracking {
+  margin: 0;
+  font-size: 1.2rem;
+  font-family: ui-monospace, 'Roboto Mono', monospace;
+  letter-spacing: 0.5px;
+}
+
+.badge,
+.status-pill {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+/* VERSIÓN ANTES (Tarea 4): contraste insuficiente → incumple WCAG 1.4.3 */
+.priority-critical { background: #f97316; color: #ffffff; } /* 2.8:1 */
+.priority-standard { background: #64748b; color: #94a3b8; } /* 1.6:1 */
+.priority-low      { background: #334155; color: #64748b; } /* 1.9:1 */
+
+.meta {
+  list-style: none;
+  opacity: 0.45; /* ANTES: texto secundario apagado, contraste bajo */
+  padding: 0;
+  margin: 10px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  color: var(--lt-muted-text);
+  font-size: 0.95rem;
+
+  li { display: flex; align-items: center; gap: 4px; }
+}
+
+.card-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.status-pill { background: var(--lt-transit-bg); color: var(--lt-transit-fg); }
+.status-inspected .status-pill { background: var(--lt-inspected-bg); color: var(--lt-inspected-fg); }
+.status-rejected  .status-pill { background: var(--lt-rejected-bg);  color: var(--lt-rejected-fg); }
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Botones grandes: objetivo táctil ≥ 44 px para usar con guantes */
+ion-button {
+  min-height: 44px;
+  font-weight: 700;
+  --border-radius: 10px;
+}
+
+.btn-ok { --background: var(--lt-inspected-bg); --color: var(--lt-inspected-fg); }
+.btn-ko { --background: var(--lt-rejected-bg);  --color: var(--lt-rejected-fg); }

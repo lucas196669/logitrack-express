@@ -1,0 +1,63 @@
+/*
+ * Paleta LogiTrack Express (modo oscuro de alto contraste).
+ * Todos los pares texto/fondo superan 4.5:1 (WCAG 1.4.3) y los
+ * bordes/iconos superan 3:1 (WCAG 1.4.11).
+ *
+ * IMPORTANTE: dark.always.css define sus valores en `:root.md`
+ * (especificidad 0-1-1), que gana a un simple `:root` (0-1-0).
+ * Por eso repetimos el selector con `.md` / `.ios`: misma especificidad
+ * y este archivo se carga después → nuestra paleta manda.
+ */
+:root,
+:root.md,
+:root.ios {
+  --ion-font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --ion-background-color: #0b1220;
+  --ion-background-color-rgb: 11, 18, 32;
+  --ion-text-color: #f1f5f9;
+  --ion-text-color-rgb: 241, 245, 249;
+  --ion-toolbar-background: #111a2e;
+  --ion-item-background: transparent;
+  --ion-card-background: #16213a;
+
+  --ion-color-primary: #ffc94d;
+  --ion-color-primary-rgb: 255, 201, 77;
+  --ion-color-primary-contrast: #1a1200;
+  --ion-color-primary-contrast-rgb: 26, 18, 0;
+  --ion-color-primary-shade: #e0b144;
+  --ion-color-primary-tint: #ffce5f;
+
+  /* Fondos de la app */
+  --lt-bg-top: #0b1220;
+  --lt-bg-bottom: #111a2e;
+  --lt-surface: #16213a;      /* tarjetas */
+  --lt-surface-2: #1d2a46;    /* campos de formulario */
+  --lt-chip: #1f2c4a;         /* chips de datos  (#e2e8f0 → 11.2:1) */
+  --lt-field-border: #64748b; /* borde de campos (3.6:1 sobre cabecera) */
+
+  /* Colores de estado (texto oscuro sobre fondo claro → ratio > 7:1) */
+  --lt-transit-bg: #93c5fd;
+  --lt-transit-fg: #0b1f3a;
+  --lt-transit-rgb: 147, 197, 253;
+  --lt-inspected-bg: #86efac;
+  --lt-inspected-fg: #052e16;
+  --lt-inspected-rgb: 134, 239, 172;
+  --lt-rejected-bg: #fca5a5;
+  --lt-rejected-fg: #450a0a;
+  --lt-rejected-rgb: 252, 165, 165;
+
+  --lt-critical-bg: #fdba74;
+  --lt-critical-fg: #431407;
+  --lt-standard-bg: #cbd5e1;
+  --lt-standard-fg: #0f172a;
+  --lt-low-bg: #e2e8f0;
+  --lt-low-fg: #1e293b;
+
+  --lt-muted-text: #cbd5e1;
+  --lt-focus: #ffc94d;
+
+  --lt-radius: 16px;
+  --lt-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.65), 0 2px 6px rgba(0, 0, 0, 0.3);
+  --lt-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
